@@ -3,8 +3,8 @@ import PetStore from './PetStore';
 
 class MainPage extends Component {
     render() {
-        return <div>
-            <PetStore/>
+        return <div style={{ 'backgroundColor': '#ede7e7' }} >
+            <PetStore />
         </div>
 
     }

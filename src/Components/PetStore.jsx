@@ -2,13 +2,13 @@
 import Divider from '@mui/material/Divider';
 import axios from "axios";
 import React, { useEffect } from 'react';
-//import PathDetails from './PathDetails';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Info from './Info';
+
 
 const baseURL = "https://petstore.swagger.io/v2/swagger.json";
 
@@ -27,7 +27,7 @@ function PetStore() {
     Object.keys(methods).map((method, index) => {
         return (
             <div style={{ margin: '20px' }}>
-                <Accordion>
+                <Accordion  key={method+index}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} id={index}>
                         <Typography>Method: <strong>{method}</strong></Typography>
                     </AccordionSummary>
@@ -55,16 +55,13 @@ function PetStore() {
             <div style={{ margin: '40px' }}>
                 {Object.keys(post.paths).map((key, index) => {
                     return (
-                        <Accordion>
+                        <Accordion key={key+index}> 
                             <AccordionSummary expandIcon={<ExpandMoreIcon />} id={index}>
-                                <Typography  style={{ color: 'navy' }} >{key}</Typography>
+                                <Typography  color='navy' >{key}</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <div>
-                                    Open path description on separate page: Button TODO
-                                </div>
-                                <div>
-                                    Whole path description in JSON:
+                                    Check the method details:
                                 </div>
                                 {getMethodDetails(post.paths[key])}
                             </AccordionDetails>
