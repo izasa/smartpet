@@ -22,11 +22,35 @@ function PetStore() {
 
     if (!post) return null;
 
+    const getMethodDetails = (methods) =>
+        Object.keys(methods).map((method, index) => {
+            return (
+                <div style={{ margin: '20px' }}>
+                    <Accordion>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />} id={index}>
+                            <Typography>Method: <strong>{method}</strong></Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Typography>Parameters:</Typography>
+                            <pre>
+                                {JSON.stringify(methods[method]['parameters'], null, '\t')}
+                            </pre>
+                            <Typography>Responses:</Typography>
+                            <pre>
+                                {JSON.stringify(methods[method]['responses'], null, '\t')}
+                            </pre>
+                        </AccordionDetails>
+                    </Accordion>
+                </div>
+            )
+        });
+
+
     return (
         <div>
             <Banner />
-            <div style={{ margin: '20px' }}>
-                <h1 style={{ margin: '20px' }}>Info: </h1>
+            <div style={{ margin: '40px' }}>
+                <h1 style={{ margin: '40px' }}>Info: </h1>
                 <Card variant="outlined" >
                     <CardContent>
                         <div style={{ overflow: 'auto' }}>
@@ -38,28 +62,26 @@ function PetStore() {
                 </Card>
             </div>
             <Divider />
-            <h1 style={{ margin: '20px' }}>List of paths (please click on the panel to open path details): </h1>
-            <div style={{ margin: '20px' }}>
+            <h1 style={{ margin: '40px' }}>List of paths (please click on the panel to open path details): </h1>
+            <div style={{ margin: '40px' }}>
                 {Object.keys(post.paths).map((key, index) => {
                     const keyString = String(key);
                     const valueRes = post.paths[keyString];
                     return (
                         <Accordion>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-content"
-                            id={index}
-                        >
-                            <Typography>{key}</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>
-                                <pre>
-                                    {JSON.stringify(valueRes, null, '\t')}
-                                </pre>
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion>
+                            <AccordionSummary expandIcon={<ExpandMoreIcon />} id={index}>
+                                <Typography>{key}</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <div>
+                                    Open path description on separate page: Button TODO
+                                </div>
+                                <div>
+                                    Whole path description in JSON:
+                                </div>
+                                {getMethodDetails(valueRes)}
+                            </AccordionDetails>
+                        </Accordion>
                     );
                 })}
             </div>
