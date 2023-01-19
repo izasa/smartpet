@@ -1,14 +1,8 @@
-
+import React, { useEffect } from 'react';
 import Divider from '@mui/material/Divider';
 import axios from "axios";
-import React, { useEffect } from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Info from './Info';
-
+import PathDescription from './PathDescription';
 
 const baseURL = "https://petstore.swagger.io/v2/swagger.json";
 
@@ -23,53 +17,15 @@ function PetStore() {
 
     if (!post) return null;
 
-    const getMethodDetails = (methods) =>
-    Object.keys(methods).map((method, index) => {
-        return (
-            <div style={{ margin: '20px' }}>
-                <Accordion  key={method+index}>
-                    <AccordionSummary expandIcon={<ExpandMoreIcon />} id={index}>
-                        <Typography>Method: <strong>{method}</strong></Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography>Parameters:</Typography>
-                        <pre>
-                            {JSON.stringify(methods[method]['parameters'], null, '\t')}
-                        </pre>
-                        <Typography>Responses:</Typography>
-                        <pre>
-                            {JSON.stringify(methods[method]['responses'], null, '\t')}
-                        </pre>
-                    </AccordionDetails>
-                </Accordion>
-            </div>
-        )
-    })
-
 
     return (
         <div>
-            <Info info={post.info}/>
+            <Info info={post.info} />
             <Divider />
             <h1 style={{ margin: '40px' }}>List of paths (please click on the panel to open path details): </h1>
             <div style={{ margin: '40px' }}>
-                {Object.keys(post.paths).map((key, index) => {
-                    return (
-                        <Accordion key={key+index}> 
-                            <AccordionSummary expandIcon={<ExpandMoreIcon />} id={index}>
-                                <Typography  color='navy' >{key}</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <div>
-                                    Check the method details:
-                                </div>
-                                {getMethodDetails(post.paths[key])}
-                            </AccordionDetails>
-                        </Accordion>
-                    );
-                })}
+                <PathDescription paths={post.paths} />
             </div>
-
         </div>
     );
 }

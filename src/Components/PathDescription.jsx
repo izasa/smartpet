@@ -4,31 +4,29 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import PathDetails from './PathDetails';
 
-function PathDescription({methods}) {
+function PathDescription({ paths }) {
     return (
-        Object.keys(methods).map((method, index) => {
-            return (
-                <div style={{ margin: '20px' }}>
-                    <Accordion>
+        <div>
+            {Object.keys(paths).map((key, index) => {
+                return (
+                    <Accordion key={key + index}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />} id={index}>
-                            <Typography>Method: <strong>{method}</strong></Typography>
+                            <Typography color='navy' >{key}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <Typography>Parameters:</Typography>
-                            <pre>
-                                {JSON.stringify(methods[method]['parameters'], null, '\t')}
-                            </pre>
-                            <Typography>Responses:</Typography>
-                            <pre>
-                                {JSON.stringify(methods[method]['responses'], null, '\t')}
-                            </pre>
+                            <div>
+                                Check the method details:
+                            </div>
+                            <PathDetails methods={paths[key]} />
                         </AccordionDetails>
                     </Accordion>
-                </div>
-            )
-        })
+                );
+            })}
+        </div>
     );
+
 }
 
 export default PathDescription;
