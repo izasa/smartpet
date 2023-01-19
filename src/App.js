@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
-import MainPage from './MainPage';
-import OtherPage from './OtherPage';
+import MainPage from './Components/MainPage';
+import OtherPage from './Components/OtherPage';
 
 function App() {
     return (<Router>
