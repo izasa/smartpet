@@ -1,16 +1,20 @@
+import { Card, CardContent } from "@mui/material";
+import Divider from '@mui/material/Divider';
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from 'react';
 import Banner from './Banner';
-import JSONPretty from 'react-json-pretty';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const baseURL = "https://petstore.swagger.io/v2/swagger.json";
 
 function PetStore() {
     const [post, setPost] = React.useState(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         axios.get(baseURL).then((response) => {
             setPost(response.data);
         });
@@ -21,31 +25,44 @@ function PetStore() {
     return (
         <div>
             <Banner />
-                <h1 style={{
-                    'margin': '20px;'
-                }}>Info</h1>
-
-                   
-                <div style={{
-                    'maxWidth': '800px;'
-                }}>
-
-                <JSONPretty id="json-pretty" data={post.info}></JSONPretty>
-                </div>
-
+            <div style={{ margin: '20px' }}>
+                <h1 style={{ margin: '20px' }}>Info: </h1>
+                <Card variant="outlined" >
+                    <CardContent>
+                        <div style={{ overflow: 'auto' }}>
+                            <pre>
+                                {JSON.stringify(post.info, null, '\t')}
+                            </pre>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+            <Divider />
+            <h1 style={{ margin: '20px' }}>List of paths (please click on the panel to open path details): </h1>
+            <div style={{ margin: '20px' }}>
                 {Object.keys(post.paths).map((key, index) => {
                     const keyString = String(key);
                     const valueRes = post.paths[keyString];
                     return (
-                        <div key={index}>
-                            <h2>
-                                {key}: {JSON.stringify(valueRes)}
-                            </h2>
-
-                            <hr />
-                        </div>
+                        <Accordion>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id={index}
+                        >
+                            <Typography>{key}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Typography>
+                                <pre>
+                                    {JSON.stringify(valueRes, null, '\t')}
+                                </pre>
+                            </Typography>
+                        </AccordionDetails>
+                    </Accordion>
                     );
                 })}
+            </div>
 
         </div>
     );

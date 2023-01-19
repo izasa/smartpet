@@ -9,6 +9,7 @@ function Banner() {
             <AppBar position="static">
                 <Toolbar disableGutters>
                     <Typography
+                     style={{ margin: '20px' }}
                         variant="h6"
                     >
                         Pet store
