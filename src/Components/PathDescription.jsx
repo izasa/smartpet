@@ -4,14 +4,14 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import PathDetails from './PathDetails';
+import PathDetails from './Details/PathDetails';
 
 function PathDescription({ paths }) {
     return (
         <div>
             {Object.keys(paths).map((key, index) => {
                 return (
-                    <Accordion key={key + index}>
+                    <Accordion  key={key + index}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />} id={index}>
                             <Typography color='navy' >{key}</Typography>
                         </AccordionSummary>
@@ -19,7 +19,7 @@ function PathDescription({ paths }) {
                             <div>
                                 Check the method details:
                             </div>
-                            <PathDetails methods={paths[key]} />
+                            <PathDetails  className={paths[key]} methods={paths[key]} />
                         </AccordionDetails>
                     </Accordion>
                 );

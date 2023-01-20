@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import Divider from '@mui/material/Divider';
 import axios from "axios";
-import Info from './Info';
+import Info from './Details/Info';
 import PathDescription from './PathDescription';
+import './PetStore.css'
 
 const baseURL = "https://petstore.swagger.io/v2/swagger.json";
 
@@ -19,11 +20,11 @@ function PetStore() {
 
 
     return (
-        <div>
+        <div className="PetStore" >
             <Info info={post.info} />
             <Divider />
-            <h1 style={{ margin: '40px' }}>List of paths (please click on the panel to open path details): </h1>
-            <div style={{ margin: '40px' }}>
+            <h1 className="PathContainer" >List of paths (please click on the panel to open path details): </h1>
+            <div className="PathContainer" >
                 <PathDescription paths={post.paths} />
             </div>
         </div>
